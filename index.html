@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Conti</title>
+<meta name="theme-color" content="#2E5BEA">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Conti">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+html,body{margin:0;min-height:100%}
+:root{padding-top:env(safe-area-inset-top,0px)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div style="min-width:0"><main id="main" aria-live="polite"></main></div>
+</div>
+<nav class="tabs mobile" id="tabs" aria-label="Sezioni"></nav>
+<button class="fab" id="fab" aria-label="Nuova voce" hidden><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Nuova voce</span></button>
+<div id="sheetHost"></div>
+<div id="modalHost"></div>
+<div id="toastHost"></div>
+<noscript>Questa app ha bisogno di JavaScript.</noscript>
+<script type="module" src="js/app.js"></script>
+<script>if('serviceWorker' in navigator&&location.protocol.startsWith('http')){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
+</body>
+</html>

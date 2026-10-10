@@ -1,0 +1,33 @@
+rules_version = '2';
+// Ognuno scrive solo nel proprio spazio. Un'altra persona può solo leggere,
+// e solo se il suo indirizzo email (verificato da Google) è nell'elenco "viewers" del proprietario.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+    function isViewer(uid) {
+      return signedIn()
+        && request.auth.token.email in get(/databases/$(database)/documents/users/$(uid)).data.viewers;
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid)
+        || (signedIn() && request.auth.token.email in resource.data.viewers);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['email', 'name', 'viewers'])
+        && request.resource.data.viewers is list
+        && request.resource.data.viewers.size() <= 5;
+      allow delete: if false;
+    }
+
+    match /users/{uid}/{sub=**} {
+      allow read: if isOwner(uid) || isViewer(uid);
+      allow write: if isOwner(uid);
+    }
+  }
+}
